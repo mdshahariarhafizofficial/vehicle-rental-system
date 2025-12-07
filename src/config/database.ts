@@ -3,23 +3,54 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const pool = new Pool({
-user: process.env.DB_USER,
-password: process.env.DB_PASSWORD,
-host: process.env.DB_HOST,
-port: parseInt(process.env.DB_PORT || '5432'),
-database: process.env.DB_NAME,
-ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+// Create pool with connection string
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
-// Test database connection
 export const testConnection = async (): Promise<void> => {
-try {
-const client = await pool.connect();
-console.log('Database connected successfully');
-client.release();
-} catch (error) {
-console.error('Database connection error:', error);
-process.exit(1);
-}
+  let client;
+  try {
+    client = await pool.connect();
+    console.log('✅ Database connected successfully');
+    
+    // Test query
+    const result = await client.query('SELECT NOW() as current_time');
+    console.log('📊 Database time:', result.rows[0].current_time);
+    
+    // Check tables
+    const tables = await client.query(`
+      SELECT table_name 
+      FROM information_schema.tables 
+      WHERE table_schema = 'public'
+    `);
+    
+    console.log('📋 Available tables:', tables.rows.map((row: any) => row.table_name));
+    
+  } catch (error: any) {
+    console.error('❌ Database connection error:', error.message);
+    
+    // Helpful error messages
+    if (error.message.includes('password authentication failed')) {
+      console.error('\n🔑 Password authentication failed. Possible solutions:');
+      console.error('1. Check your .env file DATABASE_URL');
+      console.error('2. Verify password in Neon dashboard');
+      console.error('3. Reset password in Neon Settings → Reset Password');
+    }
+    
+    if (error.message.includes('getaddrinfo ENOTFOUND')) {
+      console.error('\n🌐 Host not found. Check DATABASE_URL hostname');
+    }
+    
+    process.exit(1);
+  } finally {
+    if (client) {
+      client.release();
+    }
+  }
 };
+
+export default pool;

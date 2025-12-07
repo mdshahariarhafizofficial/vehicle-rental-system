@@ -32,17 +32,11 @@ created_at: Date;
 updated_at: Date;
 }
 
-export interface AuthRequest extends Request {
+// Request with user property
+export interface RequestWithUser extends Express.Request {
 user?: {
 id: number;
 email: string;
 role: string;
 };
-}
-
-export interface ApiResponse<T = any> {
-success: boolean;
-message: string;
-data?: T;
-errors?: any;
 }
