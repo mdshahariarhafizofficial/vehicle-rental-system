@@ -19,10 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'Vehicle Rental System API is running',
-  });
+  res.send('Vehicle Rental System Server is running')
 });
 
 app.use('/api/v1/auth', authRoutes);
