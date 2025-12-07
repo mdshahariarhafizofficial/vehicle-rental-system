@@ -455,14 +455,18 @@ Add comments for complex logic
 
 Write tests for new features
 
+👥 Authors
+Md. Shahariar Hafiz - Full Stack Developer - mdshahariarhafizofficial
+
+📞 Contact
+Email: shahariar.works@gmail.com
+
+GitHub: mdshahariarhafizofficial
+
+LinkedIn: devshahariarhafiz
+
 📄 License
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-👥 Authors
-- **Name:** Md. Shahariar Hafiz  
-- **Email:** shahariar.works@gmail.com  
-- **GitHub:** [mdshahariarhafizofficial](https://github.com/mdshahariarhafizofficial)  
-- **LinkedIn:** [devshahariarhafiz](https://www.linkedin.com/in/devshahariarhafiz)
 
 🙏 Acknowledgments
 Express.js team for the amazing framework
@@ -472,8 +476,5 @@ PostgreSQL community for the robust database
 TypeScript team for type safety
 
 All contributors and testers
-
-📞 Support
-For support, email your-email@example.com or create an issue in the repository.
 
 🚀 Happy Coding! If you find this project useful, please give it a star! ⭐
